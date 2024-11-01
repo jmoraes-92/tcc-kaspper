@@ -1,0 +1,33 @@
+<form action="/tarefas" method="POST">
+    <input type="hidden" name="id_tarefa" id="id_tarefa">
+
+    <label for="id_projeto">Projeto:</label>
+    <input type="number" name="id_projeto" id="id_projeto" required>
+
+    <label for="titulo">Título:</label>
+    <input type="text" name="titulo" id="titulo" required>
+
+    <label for="descricao">Descrição:</label>
+    <textarea name="descricao" id="descricao"></textarea>
+
+    <label for="complexidade">Complexidade:</label>
+    <select name="complexidade" id="complexidade">
+        <option value="baixa">Baixa</option>
+        <option value="media">Média</option>
+        <option value="alta">Alta</option>
+    </select>
+
+    <label for="horas_estimadas">Horas Estimadas:</label>
+    <input type="number" name="horas_estimadas" id="horas_estimadas" required>
+
+    <label for="id_recurso">Recurso:</label>
+    <input type="number" name="id_recurso" id="id_recurso">
+
+    <label for="status">Status:</label>
+    <select name="status" id="status">
+        <option value="Para Fazer">Para Fazer</option>
+        <option value="Em Andamento">Em Andamento</option>
+        <option value="Concluído">Concluído</option>
+    </select>
+    <button type="submit">Salvar</button>
+</form>

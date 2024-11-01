@@ -1,0 +1,23 @@
+<form action="/estimativas" method="POST">
+    <input type="hidden" name="id_estimativa" id="id_estimativa">
+
+    <label for="id_projeto">Projeto:</label>
+    <input type="number" name="id_projeto" id="id_projeto" required>
+
+    <label for="complexidade">Complexidade:</label>
+    <select name="complexidade" id="complexidade">
+        <option value="baixa">Baixa</option>
+        <option value="media">Média</option>
+        <option value="alta">Alta</option>
+    </select>
+
+    <label for="horas_estimadas">Horas Estimadas:</label>
+    <input type="number" name="horas_estimadas" id="horas_estimadas" required>
+
+    <label for="custo_estimado">Custo Estimado:</label>
+    <input type="number" step="0.01" name="custo_estimado" id="custo_estimado">
+
+    <label for="data_estimativa">Data da Estimativa:</label>
+    <input type="date" name="data_estimativa" id="data_estimativa" required>
+    <button type="submit">Salvar</button>
+</form>
