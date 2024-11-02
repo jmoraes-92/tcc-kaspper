@@ -1,0 +1,29 @@
+<div class="form-container">
+    <h2 class="text-center mb-4" style="color: #0079bf;">{{title}}</h2>
+    
+    <form action="{{actionUrl}}" method="POST">
+        <input type="hidden" name="id_usuario" id="id_usuario">
+
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome:</label>
+            <input type="text" name="nome" id="nome" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" name="email" id="email" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="papel" class="form-label">Papel:</label>
+            <select name="papel" id="papel" class="form-select">
+                <option value="gestor">Gestor</option>
+                <option value="analista">Analista</option>
+                <option value="desenvolvedor">Desenvolvedor</option>
+                <option value="cliente">Cliente</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">{{buttonText}}</button>
+    </form>
+</div>

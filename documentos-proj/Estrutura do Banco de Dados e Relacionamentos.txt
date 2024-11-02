@@ -1,0 +1,24 @@
+Estrutura do Banco de Dados e Relacionamentos
+1. Tabela Usuario
+Campos: id_usuario (PK), nome, email, papel
+Relacionamentos: Relacionamento com Projeto (solicitante e proprietário) e com Tarefa (recurso)
+
+2. Tabela Projeto
+Campos: id_projeto (PK), titulo, descricao, id_solicitante (FK para Usuario), id_proprietario (FK para Usuario), data_criacao, data_inicio, data_fim
+Relacionamentos: Relacionamento com Usuario e Estimativa, Tarefa, e Relatorio
+
+3. Tabela Estimativa
+Campos: id_estimativa (PK), id_projeto (FK para Projeto), complexidade, horas_estimadas, custo_estimado, data_estimativa
+Relacionamentos: Relacionamento com Projeto e HistoricoVersoes
+
+4. Tabela Tarefa
+Campos: id_tarefa (PK), id_projeto (FK para Projeto), titulo, descricao, complexidade, horas_estimadas, id_recurso (FK para Usuario), status
+Relacionamentos: Relacionamento com Projeto e Usuario
+
+5. Tabela HistoricoVersoes
+Campos: id_versao (PK), id_estimativa (FK para Estimativa), data_modificacao, autor, motivo_revisao
+Relacionamentos: Relacionamento com Estimativa
+
+6. Tabela Relatorio
+Campos: id_relatorio (PK), id_projeto (FK para Projeto), tipo, data_geracao, conteudo
+Relacionamentos: Relacionamento com Projeto
