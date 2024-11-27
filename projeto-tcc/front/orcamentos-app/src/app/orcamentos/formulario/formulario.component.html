@@ -1,0 +1,26 @@
+<h2>Criar Nova Demanda</h2>
+<form (ngSubmit)="salvarDemanda()">
+  <!-- Campo de Descrição -->
+  <mat-form-field appearance="fill">
+    <mat-label>Descrição</mat-label>
+    <textarea
+      matInput
+      [(ngModel)]="demanda.descricao"
+      name="descricao"
+      required
+    ></textarea>
+  </mat-form-field>
+
+  <!-- Campo de Prioridade -->
+  <mat-form-field appearance="fill">
+    <mat-label>Prioridade</mat-label>
+    <mat-select [(ngModel)]="demanda.prioridade" name="prioridade" required>
+      <mat-option value="BAIXA">Baixa</mat-option>
+      <mat-option value="MEDIA">Média</mat-option>
+      <mat-option value="ALTA">Alta</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Botão de Salvar -->
+  <button mat-raised-button color="primary" type="submit">Salvar</button>
+</form>

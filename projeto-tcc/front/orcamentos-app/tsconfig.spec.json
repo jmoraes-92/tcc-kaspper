@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["jasmine"], // Adiciona jasmine como tipo para testes
+    "outDir": "./out-tsc/spec",
+    "module": "commonjs",
+    "target": "es2020"
+  },
+  "files": [
+    "src/test.ts",
+    "src/polyfills.ts"
+  ],
+  "include": [
+    "src/**/*.spec.ts",
+    "src/**/*.d.ts"
+  ]
+}

@@ -1,0 +1,15 @@
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <!-- Defina as colunas -->
+  <ng-container matColumnDef="coluna1">
+    <th mat-header-cell *matHeaderCellDef> Coluna 1 </th>
+    <td mat-cell *matCellDef="let element"> {{ element.coluna1 }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="coluna2">
+    <th mat-header-cell *matHeaderCellDef> Coluna 2 </th>
+    <td mat-cell *matCellDef="let element"> {{ element.coluna2 }} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
