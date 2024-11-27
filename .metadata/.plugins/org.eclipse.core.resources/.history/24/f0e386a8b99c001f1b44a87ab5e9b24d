@@ -1,0 +1,5 @@
+package com.kaspper.auto.orcamento.model;
+
+public class Cliente {
+
+}
