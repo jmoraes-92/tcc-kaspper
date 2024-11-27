@@ -11,39 +11,39 @@ import java.math.BigDecimal;
 @Service
 public class OrcamentoService {
 
-    @Autowired
-    private OrcamentoRepository orcamentoRepository;
+	@Autowired
+	private OrcamentoRepository orcamentoRepository;
 
-    @Autowired
-    private NotificacaoService notificacaoService;
+	@Autowired
+	private NotificacaoService notificacaoService;
 
-    public Orcamento gerarEstimativa(Demanda demanda) {
-        BigDecimal estimativa;
+	public Orcamento gerarEstimativa(Demanda demanda) {
+		BigDecimal estimativa;
 
-        switch (demanda.getPrioridade()) {
-            case ALTA:
-                estimativa = BigDecimal.valueOf(10000);
-                break;
-            case MEDIA:
-                estimativa = BigDecimal.valueOf(5000);
-                break;
-            case BAIXA:
-            default:
-                estimativa = BigDecimal.valueOf(2000);
-                break;
-        }
+		switch (demanda.getPrioridade()) {
+		case ALTA:
+			estimativa = BigDecimal.valueOf(10000);
+			break;
+		case MEDIA:
+			estimativa = BigDecimal.valueOf(5000);
+			break;
+		case BAIXA:
+		default:
+			estimativa = BigDecimal.valueOf(2000);
+			break;
+		}
 
-        Orcamento orcamento = new Orcamento();
-        orcamento.setDemanda(demanda);
-        orcamento.setValor(estimativa);
-        orcamento.setObservacoes("Estimativa gerada automaticamente com base na prioridade da demanda.");
+		Orcamento orcamento = new Orcamento();
+		orcamento.setDemanda(demanda);
+		orcamento.setValor(estimativa);
+		orcamento.setObservacoes("Estimativa gerada automaticamente com base na prioridade da demanda.");
 
-        Orcamento orcamentoSalvo = orcamentoRepository.save(orcamento);
+		Orcamento orcamentoSalvo = orcamentoRepository.save(orcamento);
 
-        // Enviar notificação ao cliente associado à demanda
-        notificacaoService.enviarNotificacao(demanda.getCliente(), "Uma nova estimativa foi gerada para sua demanda.");
+		// Extrair o ID do cliente para enviar a notificação
+		notificacaoService.enviarNotificacao(demanda.getCliente().getIdCliente(),
+				"Uma nova estimativa foi gerada para sua demanda.");
 
-        return orcamentoSalvo;
-    }
-
+		return orcamentoSalvo;
+	}
 }

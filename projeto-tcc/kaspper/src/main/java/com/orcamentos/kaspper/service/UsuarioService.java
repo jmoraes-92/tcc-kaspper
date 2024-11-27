@@ -10,14 +10,17 @@ import java.util.List;
 @Service
 public class UsuarioService {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 
-    public List<Usuario> listarTodos() {
-        return usuarioRepository.findAll();
-    }
+	public Usuario salvar(Usuario usuario) {
+		if (usuarioRepository.existsByEmail(usuario.getEmail())) {
+			throw new IllegalArgumentException("E-mail já cadastrado.");
+		}
+		return usuarioRepository.save(usuario);
+	}
 
-    public Usuario salvar(Usuario usuario) {
-        return usuarioRepository.save(usuario);
-    }
+	public List<Usuario> listarTodos() {
+		return usuarioRepository.findAll();
+	}
 }

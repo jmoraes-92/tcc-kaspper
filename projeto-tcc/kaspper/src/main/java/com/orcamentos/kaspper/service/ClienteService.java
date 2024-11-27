@@ -18,6 +18,9 @@ public class ClienteService {
     }
 
     public Cliente salvar(Cliente cliente) {
+        if (clienteRepository.existsByEmail(cliente.getEmail())) {
+            throw new IllegalArgumentException("E-mail já cadastrado.");
+        }
         return clienteRepository.save(cliente);
     }
 }

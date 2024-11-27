@@ -24,7 +24,7 @@ public class Notificacao {
     @Column(nullable = false)
     private boolean visualizada = false;
 
-    // Getters and Setters
+    // Getters e Setters
     public Long getIdNotificacao() {
         return idNotificacao;
     }

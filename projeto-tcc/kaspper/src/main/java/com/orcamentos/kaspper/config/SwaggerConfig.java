@@ -14,9 +14,10 @@ public class SwaggerConfig {
     public Docket api() {
         return new Docket(DocumentationType.OAS_30) // Usando OpenAPI 3.0
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.orcamentos.kaspper.controller")) // Escanear apenas controladores
+                .apis(RequestHandlerSelectors.basePackage("com.orcamentos.kaspper.controller")) // Escanear todos os controladores
                 .paths(PathSelectors.any()) // Incluir todos os endpoints
                 .build()
                 .useDefaultResponseMessages(false); // Remove mensagens padrão do Spring
     }
 }
+

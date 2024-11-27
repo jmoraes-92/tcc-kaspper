@@ -1,8 +1,9 @@
 package com.orcamentos.kaspper.service;
 
-import com.orcamentos.kaspper.model.Cliente;
 import com.orcamentos.kaspper.model.Notificacao;
+import com.orcamentos.kaspper.model.Usuario;
 import com.orcamentos.kaspper.repository.NotificacaoRepository;
+import com.orcamentos.kaspper.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +15,18 @@ public class NotificacaoService {
     @Autowired
     private NotificacaoRepository notificacaoRepository;
 
-    public Notificacao enviarNotificacao(Cliente cliente, String mensagem) {
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    public Notificacao enviarNotificacao(Long idUsuario, String mensagem) {
+        Usuario usuario = usuarioRepository.findById(idUsuario)
+            .orElseThrow(() -> new IllegalArgumentException("Usuário com ID " + idUsuario + " não encontrado."));
+
         Notificacao notificacao = new Notificacao();
+        notificacao.setUsuario(usuario);
         notificacao.setMensagem(mensagem);
         notificacao.setDataEnvio(LocalDateTime.now());
         notificacao.setVisualizada(false);
-
-        // Aqui você pode incluir informações do cliente na notificação, se necessário
-        notificacao.setUsuario(null); // Ajuste ou remova este campo, se necessário
 
         return notificacaoRepository.save(notificacao);
     }
