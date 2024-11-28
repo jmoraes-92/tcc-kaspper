@@ -1,77 +1,81 @@
 package com.orcamentos.kaspper.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
+
 import java.time.LocalDateTime;
 
+@Data
 @Entity
-@Table(name = "clientes")
+@Table(name = "clientes", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCliente;
 
-    @Column(nullable = false, length = 100)
     private String nome;
 
-    @Column(nullable = false, unique = true, length = 150)
     private String email;
 
-    @Column(length = 20)
     private String telefone;
 
-    @Column(length = 100)
     private String empresa;
 
-    @Column(nullable = false, updatable = false)
+    @Column(name = "data_cadastro", nullable = false)
     private LocalDateTime dataCadastro = LocalDateTime.now();
 
-    // Getters and Setters
-    public Long getIdCliente() {
-        return idCliente;
+    @PrePersist
+    public void prePersist() {
+        this.dataCadastro = LocalDateTime.now();
     }
 
-    public void setIdCliente(Long idCliente) {
-        this.idCliente = idCliente;
-    }
+	public Long getId() {
+		return idCliente;
+	}
 
-    public String getNome() {
-        return nome;
-    }
+	public void setIdCliente(Long idCliente) {
+		this.idCliente = idCliente;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public String getNome() {
+		return nome;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public String getTelefone() {
-        return telefone;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
+	public String getTelefone() {
+		return telefone;
+	}
 
-    public String getEmpresa() {
-        return empresa;
-    }
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
 
-    public void setEmpresa(String empresa) {
-        this.empresa = empresa;
-    }
+	public String getEmpresa() {
+		return empresa;
+	}
 
-    public LocalDateTime getDataCadastro() {
-        return dataCadastro;
-    }
+	public void setEmpresa(String empresa) {
+		this.empresa = empresa;
+	}
 
-    public void setDataCadastro(LocalDateTime dataCadastro) {
-        this.dataCadastro = dataCadastro;
-    }
+	public LocalDateTime getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(LocalDateTime dataCadastro) {
+		this.dataCadastro = dataCadastro;
+	}
+    
 }

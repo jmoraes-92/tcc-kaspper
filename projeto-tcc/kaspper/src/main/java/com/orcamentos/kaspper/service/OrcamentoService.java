@@ -41,7 +41,7 @@ public class OrcamentoService {
 		Orcamento orcamentoSalvo = orcamentoRepository.save(orcamento);
 
 		// Extrair o ID do cliente para enviar a notificação
-		notificacaoService.enviarNotificacao(demanda.getCliente().getIdCliente(),
+		notificacaoService.enviarNotificacao(demanda.getCliente().getId(),
 				"Uma nova estimativa foi gerada para sua demanda.");
 
 		return orcamentoSalvo;
