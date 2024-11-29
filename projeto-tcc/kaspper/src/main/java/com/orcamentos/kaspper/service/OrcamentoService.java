@@ -1,49 +1,36 @@
 package com.orcamentos.kaspper.service;
 
-import com.orcamentos.kaspper.model.Demanda;
 import com.orcamentos.kaspper.model.Orcamento;
 import com.orcamentos.kaspper.repository.OrcamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrcamentoService {
 
-	@Autowired
-	private OrcamentoRepository orcamentoRepository;
+    @Autowired
+    private OrcamentoRepository orcamentoRepository;
 
-	@Autowired
-	private NotificacaoService notificacaoService;
+    public List<Orcamento> listarTodos() {
+        return orcamentoRepository.findAll();
+    }
 
-	public Orcamento gerarEstimativa(Demanda demanda) {
-		BigDecimal estimativa;
+    public Optional<Orcamento> buscarPorId(Long id) {
+        return orcamentoRepository.findById(id);
+    }
 
-		switch (demanda.getPrioridade()) {
-		case ALTA:
-			estimativa = BigDecimal.valueOf(10000);
-			break;
-		case MEDIA:
-			estimativa = BigDecimal.valueOf(5000);
-			break;
-		case BAIXA:
-		default:
-			estimativa = BigDecimal.valueOf(2000);
-			break;
-		}
+    public Orcamento salvar(Orcamento orcamento) {
+        return orcamentoRepository.save(orcamento);
+    }
 
-		Orcamento orcamento = new Orcamento();
-		orcamento.setDemanda(demanda);
-		orcamento.setValor(estimativa);
-		orcamento.setObservacoes("Estimativa gerada automaticamente com base na prioridade da demanda.");
-
-		Orcamento orcamentoSalvo = orcamentoRepository.save(orcamento);
-
-		// Extrair o ID do cliente para enviar a notificação
-		notificacaoService.enviarNotificacao(demanda.getCliente().getId(),
-				"Uma nova estimativa foi gerada para sua demanda.");
-
-		return orcamentoSalvo;
-	}
+    public void excluir(Long id) {
+        if (!orcamentoRepository.existsById(id)) {
+            throw new IllegalArgumentException("Orçamento com ID " + id + " não encontrado.");
+        }
+        orcamentoRepository.deleteById(id);
+    }
 }
+

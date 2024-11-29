@@ -1,45 +1,71 @@
 package com.orcamentos.kaspper.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
+import com.orcamentos.kaspper.dto.TarefaRequestDTO;
 import com.orcamentos.kaspper.model.Tarefa;
 import com.orcamentos.kaspper.model.enums.StatusTarefa;
+import com.orcamentos.kaspper.service.DemandaService;
 import com.orcamentos.kaspper.service.TarefaService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/tarefas")
 public class TarefaController {
 
-	@Autowired
-	private TarefaService tarefaService;
+    @Autowired
+    private TarefaService tarefaService;
 
-	@PostMapping
-	public ResponseEntity<Tarefa> criarTarefa(@RequestBody Tarefa tarefa) {
-		Tarefa novaTarefa = tarefaService.salvar(tarefa);
-		return ResponseEntity.ok(novaTarefa);
-	}
+    @Autowired
+    private DemandaService demandaService;
 
-	@PutMapping("/{idTarefa}/status")
-	public ResponseEntity<Tarefa> atualizarStatus(@PathVariable Long idTarefa, @RequestParam StatusTarefa status) {
-		Tarefa tarefa = tarefaService.atualizarStatus(idTarefa, status);
-		return ResponseEntity.ok(tarefa);
-	}
+    @PostMapping
+    public ResponseEntity<Tarefa> salvar(@RequestBody TarefaRequestDTO tarefaRequest) {
+        Tarefa tarefa = new Tarefa();
 
-	@GetMapping("/{idDemanda}")
-	public ResponseEntity<List<Tarefa>> listarTarefasPorDemanda(@PathVariable Long idDemanda) {
-		List<Tarefa> tarefas = tarefaService.listarPorDemanda(idDemanda);
-		return ResponseEntity.ok(tarefas);
-	}
+        if (tarefaRequest.getDescricao() == null || tarefaRequest.getDescricao().isEmpty()) {
+            throw new IllegalArgumentException("A descrição da tarefa é obrigatória.");
+        }
+
+        if (tarefaRequest.getIdDemanda() == null) {
+            throw new IllegalArgumentException("A demanda é obrigatória para salvar a tarefa.");
+        }
+
+        tarefa.setDescricao(tarefaRequest.getDescricao());
+        tarefa.setResponsavel(tarefaRequest.getResponsavel());
+        tarefa.setStatus(StatusTarefa.valueOf(tarefaRequest.getStatus().toUpperCase()));
+
+        // Associa a demanda
+        tarefa.setDemanda(
+            Optional.ofNullable(demandaService.buscarPorId(tarefaRequest.getIdDemanda()))
+                .orElseThrow(() -> new IllegalArgumentException(
+                    "Demanda com ID " + tarefaRequest.getIdDemanda() + " não encontrada."
+                ))
+        );
+
+        return ResponseEntity.ok(tarefaService.salvar(tarefa));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Tarefa> buscarPorId(@PathVariable Long id) {
+        Tarefa tarefa = tarefaService.buscarPorId(id)
+            .orElseThrow(() -> new IllegalArgumentException("Tarefa com ID " + id + " não encontrada."));
+        return ResponseEntity.ok(tarefa);
+    }
+
+    @PutMapping("/{id}/status")
+    public ResponseEntity<Tarefa> atualizarStatus(@PathVariable Long id, @RequestParam String status) {
+        StatusTarefa novoStatus = StatusTarefa.valueOf(status.toUpperCase());
+        Tarefa tarefa = tarefaService.atualizarStatus(id, novoStatus)
+            .orElseThrow(() -> new IllegalArgumentException("Tarefa com ID " + id + " não encontrada."));
+        return ResponseEntity.ok(tarefa);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        tarefaService.deletar(id);
+        return ResponseEntity.noContent().build();
+    }
 }

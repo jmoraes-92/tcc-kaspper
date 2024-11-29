@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class NotificacaoService {
@@ -29,5 +30,16 @@ public class NotificacaoService {
         notificacao.setVisualizada(false);
 
         return notificacaoRepository.save(notificacao);
+    }
+
+    public Notificacao marcarComoVisualizada(Long idNotificacao) {
+        Notificacao notificacao = notificacaoRepository.findById(idNotificacao)
+            .orElseThrow(() -> new IllegalArgumentException("Notificação não encontrada."));
+        notificacao.setVisualizada(true);
+        return notificacaoRepository.save(notificacao);
+    }
+
+    public List<Notificacao> listarNotificacoesPorUsuario(Long idUsuario) {
+        return notificacaoRepository.findByUsuarioId(idUsuario);
     }
 }

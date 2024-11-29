@@ -1,8 +1,7 @@
 package com.orcamentos.kaspper.model;
 
-import com.orcamentos.kaspper.model.enums.StatusTarefa;
 import jakarta.persistence.*;
-import java.time.LocalDate;
+import com.orcamentos.kaspper.model.enums.StatusTarefa;
 
 @Entity
 @Table(name = "tarefas")
@@ -12,37 +11,27 @@ public class Tarefa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idTarefa;
 
-    @ManyToOne
+    @Column(nullable = false)
+    private String descricao;
+
+    @Column
+    private String responsavel;
+
+    @Column(nullable = false)
+    private StatusTarefa status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_demanda", nullable = false)
     private Demanda demanda;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String descricao;
+    // Getters e Setters
 
-    @Column(length = 100)
-    private String responsavel;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private StatusTarefa status = StatusTarefa.PENDENTE;
-
-    private LocalDate prazo;
-
-    // Getters and Setters
     public Long getIdTarefa() {
         return idTarefa;
     }
 
     public void setIdTarefa(Long idTarefa) {
         this.idTarefa = idTarefa;
-    }
-
-    public Demanda getDemanda() {
-        return demanda;
-    }
-
-    public void setDemanda(Demanda demanda) {
-        this.demanda = demanda;
     }
 
     public String getDescricao() {
@@ -69,11 +58,11 @@ public class Tarefa {
         this.status = status;
     }
 
-    public LocalDate getPrazo() {
-        return prazo;
+    public Demanda getDemanda() {
+        return demanda;
     }
 
-    public void setPrazo(LocalDate prazo) {
-        this.prazo = prazo;
+    public void setDemanda(Demanda demanda) {
+        this.demanda = demanda;
     }
 }

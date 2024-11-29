@@ -9,35 +9,40 @@ import java.time.LocalDateTime;
 @Table(name = "demandas")
 public class Demanda {
 
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idDemanda;
-
+    @Column(name = "id_demanda", nullable = false)
+    private Long id; 
+	
     @ManyToOne
     @JoinColumn(name = "id_cliente", nullable = false)
     private Cliente cliente;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(name = "descricao", nullable = false, columnDefinition = "TEXT")
     private String descricao;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "prioridade", nullable = false)
     private Prioridade prioridade;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private StatusDemanda status = StatusDemanda.EM_ANALISE;
+    @Column(name = "status", nullable = false)
+    private StatusDemanda status;
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime dataCriacao = LocalDateTime.now();
+    @Column(name = "data_criacao", nullable = false)
+    private LocalDateTime dataCriacao;
 
-    // Getters and Setters
-    public Integer getIdDemanda() {
-        return idDemanda;
+    @PrePersist
+    public void prePersist() {
+        this.dataCriacao = LocalDateTime.now();
     }
 
-    public void setIdDemanda(Integer idDemanda) {
-        this.idDemanda = idDemanda;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Cliente getCliente() {
@@ -78,5 +83,15 @@ public class Demanda {
 
     public void setDataCriacao(LocalDateTime dataCriacao) {
         this.dataCriacao = dataCriacao;
+    }
+
+    /**
+     * Método `orElseThrow` funcional para validação em Optional.
+     */
+    public static Demanda orElseThrow(Demanda demanda, RuntimeException exception) {
+        if (demanda == null) {
+            throw exception;
+        }
+        return demanda;
     }
 }

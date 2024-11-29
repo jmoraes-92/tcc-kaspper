@@ -1,67 +1,75 @@
 package com.orcamentos.kaspper.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
+
 import java.time.LocalDateTime;
 
+@Data
 @Entity
 @Table(name = "notificacoes")
 public class Notificacao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idNotificacao;
+    @Column(name = "id_notificacao")
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(name = "mensagem", nullable = false, columnDefinition = "TEXT")
     private String mensagem;
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime dataEnvio = LocalDateTime.now();
+    @Column(name = "data_envio", nullable = false)
+    private LocalDateTime dataEnvio;
 
-    @Column(nullable = false)
-    private boolean visualizada = false;
+    @Column(name = "visualizada", nullable = false)
+    private boolean visualizada;
 
-    // Getters e Setters
-    public Long getIdNotificacao() {
-        return idNotificacao;
+    @PrePersist
+    public void prePersist() {
+        this.dataEnvio = LocalDateTime.now();
     }
 
-    public void setIdNotificacao(Long idNotificacao) {
-        this.idNotificacao = idNotificacao;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public Usuario getUsuario() {
-        return usuario;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
+	public Usuario getUsuario() {
+		return usuario;
+	}
 
-    public String getMensagem() {
-        return mensagem;
-    }
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
-    public void setMensagem(String mensagem) {
-        this.mensagem = mensagem;
-    }
+	public String getMensagem() {
+		return mensagem;
+	}
 
-    public LocalDateTime getDataEnvio() {
-        return dataEnvio;
-    }
+	public void setMensagem(String mensagem) {
+		this.mensagem = mensagem;
+	}
 
-    public void setDataEnvio(LocalDateTime dataEnvio) {
-        this.dataEnvio = dataEnvio;
-    }
+	public LocalDateTime getDataEnvio() {
+		return dataEnvio;
+	}
 
-    public boolean isVisualizada() {
-        return visualizada;
-    }
+	public void setDataEnvio(LocalDateTime dataEnvio) {
+		this.dataEnvio = dataEnvio;
+	}
 
-    public void setVisualizada(boolean visualizada) {
-        this.visualizada = visualizada;
-    }
+	public boolean isVisualizada() {
+		return visualizada;
+	}
+
+	public void setVisualizada(boolean visualizada) {
+		this.visualizada = visualizada;
+	}
 }

@@ -12,31 +12,39 @@ public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idCliente;
+    @Column(name = "id_cliente")
+    private Long id;
 
+    @Column(name = "nome", length = 255)
     private String nome;
 
+    @Column(name = "email", length = 255, unique = true)
     private String email;
 
+    @Column(name = "telefone", length = 255)
     private String telefone;
 
+    @Column(name = "empresa", length = 255)
     private String empresa;
 
     @Column(name = "data_cadastro", nullable = false)
-    private LocalDateTime dataCadastro = LocalDateTime.now();
+    private LocalDateTime dataCadastro;
 
     @PrePersist
     public void prePersist() {
         this.dataCadastro = LocalDateTime.now();
     }
 
+
 	public Long getId() {
-		return idCliente;
+		return id;
 	}
 
-	public void setIdCliente(Long idCliente) {
-		this.idCliente = idCliente;
+
+	public void setId(Long id) {
+		this.id = id;
 	}
+
 
 	public String getNome() {
 		return nome;

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.orcamentos.kaspper.model.Tarefa;
 
 public interface TarefaRepository extends JpaRepository<Tarefa, Long> {
-    List<Tarefa> findByDemandaIdDemanda(Long idDemanda);
+    List<Tarefa> findByDemandaId(Integer idDemanda);
 }
+
 
