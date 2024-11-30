@@ -1,10 +1,12 @@
 package com.orcamentos.kaspper.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.orcamentos.kaspper.model.enums.Prioridade;
 import com.orcamentos.kaspper.model.enums.StatusDemanda;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "demandas")
 public class Demanda {
@@ -26,7 +28,7 @@ public class Demanda {
     private Prioridade prioridade;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
+    @Column(name = "status", nullable = false, length = 20)
     private StatusDemanda status;
 
     @Column(name = "data_criacao", nullable = false)

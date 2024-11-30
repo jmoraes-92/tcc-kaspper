@@ -4,6 +4,10 @@ import com.orcamentos.kaspper.model.Notificacao;
 import com.orcamentos.kaspper.model.Usuario;
 import com.orcamentos.kaspper.service.NotificacaoService;
 import com.orcamentos.kaspper.service.UsuarioService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/usuarios")
+@Tag(name = "Usuários", description = "Endpoints para gerenciar usuários")
 public class UsuarioController {
 
     @Autowired
@@ -21,6 +26,7 @@ public class UsuarioController {
     private NotificacaoService notificacaoService;
 
     @GetMapping
+    @Operation(summary = "Listar todos os usuários", description = "Retorna uma lista paginada de usuários.")
     public List<Usuario> listarTodos() {
         return usuarioService.listarTodos();
     }

@@ -1,9 +1,9 @@
 package com.orcamentos.kaspper.model.enums;
-
 public enum StatusDemanda {
-    EM_ANALISE,
-    EM_DESENVOLVIMENTO,
-    CONCLUIDA;
+	   	NOVA,
+	    EM_ANDAMENTO,
+	    CONCLUIDA,
+	    ABERTA;
 
     public static StatusDemanda fromString(String value) {
         for (StatusDemanda status : values()) {

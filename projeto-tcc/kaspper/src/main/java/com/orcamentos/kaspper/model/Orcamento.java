@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -18,42 +19,65 @@ public class Orcamento {
     @ManyToOne
     @JoinColumn(name = "id_demanda", nullable = false)
     private Demanda demanda;
-    
+
     @Column(name = "valor", nullable = false, precision = 38, scale = 2)
     private BigDecimal valor;
+
+    @Column(name = "prazo_estimado", nullable = false)
+    private int prazoEstimado;
+
+    @Column(name = "data_geracao", nullable = false)
+    private LocalDateTime dataGeracao;
 
     @Column(name = "observacoes", columnDefinition = "TEXT")
     private String observacoes;
 
-	public Long getId() {
-		return id;
-	}
+    // Getters e Setters
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public Demanda getDemanda() {
-		return demanda;
-	}
+    public Demanda getDemanda() {
+        return demanda;
+    }
 
-	public void setDemanda(Demanda demanda) {
-		this.demanda = demanda;
-	}
+    public void setDemanda(Demanda demanda) {
+        this.demanda = demanda;
+    }
 
-	public BigDecimal getValor() {
-		return valor;
-	}
+    public BigDecimal getValor() {
+        return valor;
+    }
 
-	public void setValor(BigDecimal valor) {
-		this.valor = valor;
-	}
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
+    }
 
-	public String getObservacoes() {
-		return observacoes;
-	}
+    public int getPrazoEstimado() {
+        return prazoEstimado;
+    }
 
-	public void setObservacoes(String observacoes) {
-		this.observacoes = observacoes;
-	}
+    public void setPrazoEstimado(int prazoEstimado) {
+        this.prazoEstimado = prazoEstimado;
+    }
+
+    public LocalDateTime getDataGeracao() {
+        return dataGeracao;
+    }
+
+    public void setDataGeracao(LocalDateTime dataGeracao) {
+        this.dataGeracao = dataGeracao;
+    }
+
+    public String getObservacoes() {
+        return observacoes;
+    }
+
+    public void setObservacoes(String observacoes) {
+        this.observacoes = observacoes;
+    }
 }

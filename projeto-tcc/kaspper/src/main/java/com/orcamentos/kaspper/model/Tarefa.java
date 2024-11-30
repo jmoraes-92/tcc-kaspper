@@ -1,6 +1,9 @@
 package com.orcamentos.kaspper.model;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
+
 import com.orcamentos.kaspper.model.enums.StatusTarefa;
 
 @Entity
@@ -19,8 +22,11 @@ public class Tarefa {
 
     @Column(nullable = false)
     private StatusTarefa status;
+    
+    @Column
+    private LocalDate prazo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_demanda", nullable = false)
     private Demanda demanda;
 
@@ -65,4 +71,12 @@ public class Tarefa {
     public void setDemanda(Demanda demanda) {
         this.demanda = demanda;
     }
+    
+    public LocalDate getPrazo() {
+		return prazo;
+	}
+
+	public void setPrazo(LocalDate prazo) {
+		this.prazo = prazo;
+	}
 }
